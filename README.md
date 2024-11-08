@@ -1,4 +1,4 @@
-# Akustikaproov II
+# Akustikaproov
 
 ## Documentation
 
