@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adminileht</title>
+    <link rel="stylesheet" type="text/css" href="admin-style.css">
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h1>Lisa kõlakoja andmed andmebaasi</h1>
+
+<form id="stageForm" method="POST">
+<!--<form action="" method="POST">-->
+    <b>Lava andmed:</b>
+    <br><br>
+    <label for="lavanimi">Lavanimi<span class="required"> *</span> :</label>
+    <input type="text" id="lavanimi" name="name"> 
+    <br>
+    <label for="linn">Maakond<span class="required"> *</span> :</label>
+    <input type="text" id="linn" name="county">
+    <br>
+    <label for="aadress">Aadress<span class="required"> *</span> :</label>
+    <input type="text" id="aadress" name="address">
+    <br>
+    <label for="latitude">Laiuskraadid (Kümnendkraadi vormingus)<span class="required"> *</span> :</label>
+    <input type="text" id="latitude" name="latitude">
+    <br>
+    <label for="longitude">Pikkuskraadid (Kümnendkraadi vormingus)<span class="required"> *</span> :</label>
+    <input type="text" id="longitude" name="longitude">
+    <br>
+    <label for="ajalugu">Ajalugu:</label>
+    <textarea id="Ajalugu" name="Ajalugu" class="resizableField"></textarea>
+    <br>
+    <label for="kes_ehitas">Kes ehitas:</label>
+    <input type="text" id="kes_ehitas" name="Kes ehitas">
+    <br>
+    <label for="kuna_ehitati">Kuna ehitati:</label>
+    <input type="text" id="kuna_ehitati" name="Kuna ehitati">
+    <br><br>
+    <label for="mootmisekuupaev">Mõõtmise kuupäev:</label>
+    <input type="date" id="mootmisekuupaev" name="Mõõtmise kuupäev">
+    <br>
+    <label for="ilm">Ilma kirjeldus:</label>
+    <input type="text" id="ilm" name="Ilm">
+    <br>
+    <label for="astmete_arv">Astmete arv:</label>
+    <input type="text" id="astmete_arv" name="Astmete arv">
+    <br>
+    <label for="sygavus">Sügavus:</label>
+    <input type="text" id="sygavus" name="Sügavus">
+    <br>
+    <label for="laius">Laius:</label>
+    <input type="text" id="laius" name="Laius">
+    <br>
+    <label for="tuul">Tuul:</label>
+    <input type="text" id="tuul" name="Tuul"> 
+    <br>
+    <input type="submit" value="Sisesta andmebaasi!">
+</form>
+
+<script>
+    function reqFieldCheck(formKey, formValue){
+        switch(formKey){
+            case "name":
+                if (!formValue){
+                    alert("Lavanimi on täitmata !");
+                    return true;
+                }
+                break;
+            case "county":
+                if (!formValue){
+                    alert("Maakond on täitmata !");
+                    return true;
+                }
+                break;
+            case "address":
+                if (!formValue){
+                    alert("Aadress on täitmata !");
+                    return true;
+                }
+                break;
+            case "latitude":
+                if (!formValue){
+                    alert("Laiuskraadid on täitmata !");
+                    return true;
+                }
+                break;
+            case "longitude":
+                if (!formValue){
+                    alert("Pikkuskraadid on täitmata");
+                    return true;
+                }
+                break;
+        }
+        return false; 
+    }
+
+    // Function that dynamically increases textarea height
+    textarea = document.querySelector("#Ajalugu");
+    textarea.addEventListener('input', autoResize, false);
+    function autoResize() {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+    }
+    
+    //Function that checks if string starts with a capital letter
+    function upper_case(str){
+        regexp = /^[A-Z]/;
+        if (regexp.test(str)){
+                return true;
+            } 
+        else{
+            return false;
+        }
+    }
+
+    const form = document.getElementById("stageForm");
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const formData     = new FormData(form);
+        const payload      = {};
+        const stageData    = [];
+        let stopSubmission = false;
+
+        formData.forEach((value, key) => {
+            if (reqFieldCheck(key, value)){
+                console.log("should stop");
+                stopSubmission = true;
+                return;
+            }
+            let object = {};
+            if(upper_case(key)){
+                if(value){
+                    Object.assign(object,  {type: key, value: value});
+                    stageData.push(object);
+                }
+            } else {
+                payload[key] = value;
+            }
+        });
+
+        if (stopSubmission) {
+            return; // If stopSubmission is true, do not proceed with Axios request
+        }
+        Object.assign(payload, {stageData: stageData});
+        console.log(payload);
+        
+        // Below can be used once POST endpoint is available 
+
+        /*
+        axios.post('HopeFully Future URL', stageData)
+            .then(res => {
+                alert("Lava andmed edukalt lisatud !");
+                console.log(res);
+            })
+            .catch(err => {
+                alert("Midagi läks valesti !");
+                console.log(err);
+            })*/
+    })
+
+</script>
+</body>
+</html>
