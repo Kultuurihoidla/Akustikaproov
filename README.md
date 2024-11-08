@@ -8,8 +8,6 @@
 
 ## Backend
 
-Run BE [docker](https://hub.docker.com/r/saskia02/kaardirakendus):
-
 	.env setup:
 		1. add .env to the root folder.
 		2. add 2 values into the .env file:
@@ -37,7 +35,3 @@ Run BE locally:
 
 You need Java and PostgreSQL installed. Create env.properties file in src/main/resources where DB_URL, DB_USER, DB_PASSWORD will be the values for connectiong to your PostgreSQL database. When running backend Flyway will automagically create DB and prefill it with data.
 
-
-### Deploy to docker hub:
-Run: .\build-and-deploy-img.bat
-"# Akustikaproov" 
