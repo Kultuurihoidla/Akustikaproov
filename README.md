@@ -1,5 +1,7 @@
 # Akustikaproov
 
+Code was migrated from this repo: github.com/saskia002/kaardirakendus
+
 ## Documentation
 
     API documentation: 
